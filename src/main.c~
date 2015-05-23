@@ -1,0 +1,187 @@
+#include <stdlib.h>
+#include <SDL/SDL.h>
+
+    SDL_Surface *screen, *image, *background;
+    SDL_Rect dst;
+    SDL_Rect BGdst;
+        int BGx=0;
+    SDL_Event event;
+    Uint8 *keys;
+    int tuxX = 50, tuxY = 375;
+
+
+int main(int argc, char *argv[])
+{
+        BGdst.x=800;
+        BGdst.y=0;
+        dst.x=tuxX;
+        dst.y=tuxY;
+        int done = 0;
+    if (SDL_Init(SDL_INIT_VIDEO) == -1) {
+        printf("Can't init SDL:  %s\n", SDL_GetError());
+        exit(1);
+    }
+    atexit(SDL_Quit); 
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+    if (screen == NULL) {
+        printf("Can't set video mode: %s\n", SDL_GetError());
+        exit(1);
+    }
+    image = SDL_LoadBMP("tux.bmp");
+        background = SDL_LoadBMP("Level1.bmp");
+    if (image == NULL) {
+        printf("Can't load image of tux: %s\n", SDL_GetError());
+        exit(1);
+    }	
+    dst.w = image->w;
+    dst.h = image->h;
+     BGdst.w= background->w;
+        BGdst.h = background->h;
+    SDL_SetColorKey(image, SDL_SRCCOLORKEY, SDL_MapRGB(image->format, 255, 0, 0));    
+    while (!done) {
+        BGdst.x=BGx;
+        while (SDL_PollEvent(&event)) {
+            switch(event.type) {
+            case SDL_QUIT:
+                done = 1;
+                break;
+            }
+        }
+       keys = SDL_GetKeyState(NULL);
+       if (keys[SDLK_UP]) {
+       }
+       if (keys[SDLK_DOWN]) {
+       }
+       if (keys[SDLK_RIGHT]) {
+                if(BGx<-110)
+                   {
+                        BGdst.x=BGx;
+while(dst.y<375)
+                {
+                BGdst.x=BGx;
+                dst.y++;
+                              if (keys[SDLK_RIGHT]) {
+           if(dst.x < 800 - image->w) {
+               dst.x++;
+           }
+       }
+                               SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+        }
+}
+                if(dst.x<700)
+                {
+           if(dst.x < 610 - image->w) {
+               dst.x++;
+           }
+           else
+               {
+                if(dst.y< 281)
+                {
+                dst.x++;
+                }
+}
+}
+else
+{
+BGx=BGx-2;
+}
+       }
+       if (keys[SDLK_LEFT]) {
+           if(BGx<0)
+                {
+                BGx++;
+                if(BGx>100){
+                        if(dst.y<280)
+                        {
+                        dst.x--;
+                        }
+                        else
+                        {
+                        dst.x++;
+                        BGx=BGx-2;
+                        }
+                    }
+                }
+                else
+                {
+                if (dst.x > 0) {
+                if(dst.x < 485){
+while(dst.y<375)
+                {
+                dst.y++;
+                dst.x--;
+                              if (keys[SDLK_RIGHT]) {
+           if(dst.x < 800 - image->w) {
+               dst.x++;
+           }
+       }
+                               SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+        } }
+               dst.x--;
+           }
+        }
+       }
+        if(keys[SDLK_SPACE]) {
+                while(dst.y>240)
+                {
+                dst.y--;
+                             if (keys[SDLK_RIGHT]) {
+           if(dst.x < 800 - image->w) {
+               dst.x++;
+           }
+       }
+                 SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+                }
+        if(dst.x>485)
+                {
+                while(dst.y<280)
+                {
+                dst.y++;
+                             if (keys[SDLK_RIGHT]) {
+           if(dst.x < 800 - image->w) {
+               dst.x++;
+           }
+       }
+                               SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+                }
+                }
+                else
+                {
+                while(dst.y<375)
+                {
+                dst.y++;
+                              if (keys[SDLK_RIGHT]) {
+           if(dst.x < 800 - image->w) {
+               dst.x++;
+           }
+       }
+                               SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+        } 
+}
+}                
+        if (keys[SDLK_ESCAPE]) {
+                done=1;
+}
+                      SDL_BlitSurface(background, NULL, screen, &BGdst);        
+                 SDL_BlitSurface(image, NULL, screen, &dst);
+                 SDL_Flip(screen);
+                SDL_Delay(0.001);
+    }
+        SDL_FreeSurface(image);
+    return 0;
+}
